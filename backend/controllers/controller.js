@@ -1,4 +1,5 @@
 
+const SampleModel = require("../models/sampleModel");
 const { GetAll, GetOne, Create, Update, deleteItem } = require("../services/service");
 
 const getOneHandler = async (req, res) => {
@@ -27,7 +28,8 @@ const getOneHandler = async (req, res) => {
 const getAllHandler = async (req, res) => {
     const { pageNumber, filters } = req.query; 
     try {
-        const response = await GetAll(pageNumber, filters); 
+        const filterObject = JSON.parse(filters)
+        const response = await GetAll(pageNumber, filterObject, SampleModel); 
         res.status(200).json({
             success: true,
             data: response.items,
